@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { Card } from 'react-native-elements';
-import { baseUrl } from '../shared/baseUrl';
+import { baseUrl } from '../../shared/baseUrl';
 
 const ProductCard = ({ navigation, product }) => {
   if (product) {

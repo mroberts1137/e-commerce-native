@@ -1,8 +1,14 @@
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import Loading from '../components/LoadingComponent';
+import ProductsDisplay from '../features/products/ProductsDisplay';
 
 const HomeScreen = ({ navigation }) => {
-  return <Text>Home</Text>;
+  return (
+    <View>
+      <Text>Home</Text>
+      <ProductsDisplay navigation={navigation} />
+    </View>
+  );
 };
 
 export default HomeScreen;
