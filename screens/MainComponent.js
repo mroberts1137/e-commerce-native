@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Platform } from 'react-native';
 import { Icon } from 'react-native-elements';
+import Constants from 'expo-constants';
 import { createStackNavigator } from '@react-navigation/stack';
 import { fetchProducts } from '../features/products/productsSlice';
 import HomeScreen from './HomeScreen';
@@ -15,7 +16,7 @@ const screenOptions = {
 const StackNavigator = () => {
   const Stack = createStackNavigator();
   return (
-    <Stack.Navigator screenOptions={screenOptions}>
+    <Stack.Navigator screenOptions={screenOptions} initialRouteName='Home'>
       <Stack.Screen
         name='Home'
         component={HomeScreen}
@@ -33,8 +34,8 @@ const StackNavigator = () => {
       <Stack.Screen
         name='ProductDetail'
         component={ProductDetailScreen}
-        options={() => ({
-          title: 'Product Detail'
+        options={({ route }) => ({
+          title: route.params.product.title
         })}
       />
     </Stack.Navigator>
@@ -48,7 +49,16 @@ const Main = () => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  return <StackNavigator />;
+  return (
+    <View
+      style={{
+        flex: 1,
+        paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight
+      }}
+    >
+      <StackNavigator />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({

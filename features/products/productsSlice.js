@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { baseUrl } from '../../shared/baseUrl';
+import { appendProductsData } from '../../utils/appendProductsData';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchProducts',
@@ -14,9 +15,15 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+const initialState = {
+  productsArray: [],
+  isLoading: true,
+  errMsg: null
+};
+
 const productsSlice = createSlice({
   name: 'products',
-  initialState: { isLoading: true, errMsg: null, productsArray: [] },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -27,7 +34,7 @@ const productsSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.errMsg = null;
-        state.productsArray = action.payload;
+        state.productsArray = appendProductsData(action.payload);
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.isLoading = false;

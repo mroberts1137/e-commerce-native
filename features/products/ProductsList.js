@@ -7,7 +7,10 @@ const ProductsList = ({ navigation, products }) => {
       <FlatList
         data={products}
         renderItem={({ item }) => (
-          <ProductCard product={item} navigation={navigation} />
+          <ProductCard
+            product={item}
+            onPress={() => navigation.navigate('ProductDetail', { product })}
+          />
         )}
         numColumns={2}
         keyExtractor={(item) => item.id.toString()}
