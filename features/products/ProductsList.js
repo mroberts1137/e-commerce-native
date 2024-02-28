@@ -1,17 +1,16 @@
 import { Text, View, FlatList } from 'react-native';
 import ProductCard from './ProductCard';
 
-const ProductsList = ({ navigation, products }) => {
+const renderItem = ({ item }) => {
+  return <ProductCard product={item} />;
+};
+
+const ProductsList = ({ products }) => {
   return (
     <View>
       <FlatList
         data={products}
-        renderItem={({ item }) => (
-          <ProductCard
-            product={item}
-            onPress={() => navigation.navigate('ProductDetail', { product })}
-          />
-        )}
+        renderItem={renderItem}
         numColumns={2}
         keyExtractor={(item) => item.id.toString()}
       />

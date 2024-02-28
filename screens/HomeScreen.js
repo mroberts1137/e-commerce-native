@@ -5,7 +5,6 @@ import ProductsDisplay from '../features/products/ProductsDisplay';
 const HomeScreen = ({ navigation }) => {
   return (
     <View>
-      <Text>Home</Text>
       <ProductsDisplay navigation={navigation} />
     </View>
   );

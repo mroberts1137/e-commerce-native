@@ -12,9 +12,9 @@ const screenOptions = {
   headerTintColor: '#FFF',
   headerStyle: { backgroundColor: '#5637DD' }
 };
+const Stack = createStackNavigator();
 
 const StackNavigator = () => {
-  const Stack = createStackNavigator();
   return (
     <Stack.Navigator screenOptions={screenOptions} initialRouteName='Home'>
       <Stack.Screen

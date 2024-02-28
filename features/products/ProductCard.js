@@ -1,26 +1,48 @@
-import { Text, View } from 'react-native';
-import { Card } from 'react-native-elements';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { Card, Rating } from 'react-native-elements';
 import { baseUrl } from '../../shared/baseUrl';
+import { useNavigation } from '@react-navigation/native';
 
-const ProductCard = ({ navigation, product }) => {
+const ProductCard = ({ product }) => {
+  const navigation = useNavigation();
+
   if (product) {
     return (
-      <Card containerStyle={{ padding: 0 }}>
-        <Card.Image source={{ uri: product.image }}>
-          <View style={{ justifyContent: 'center', flex: 1 }}>
-            <Text
+      <TouchableOpacity
+        onPress={() => navigation.navigate('ProductDetail', { product })}
+      >
+        <Card containerStyle={{ padding: 0, width: 165 }}>
+          <Card.Image source={{ uri: product.image }} />
+          <Text
+            numberOfLines={2}
+            style={{
+              color: 'black',
+              textAlign: 'center',
+              fontSize: 20
+            }}
+          >
+            {product.title}
+          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Rating
+              readonly
+              startingValue={product.rating.rate}
+              imageSize={20}
               style={{
-                color: 'white',
-                textAlign: 'center',
-                fontSize: 20
+                alignItems: 'flex-start',
+                paddingBottom: '5%',
+                paddingLeft: 5,
+                paddingRight: 10
               }}
-            >
-              {product.title}
-            </Text>
+            />
+            <Text>({product.rating.count})</Text>
           </View>
-        </Card.Image>
-        <Text style={{ margin: 20 }}>{product.description}</Text>
-      </Card>
+
+          <Text style={{ textAlign: 'center', fontSize: 18 }}>
+            ${product.price}
+          </Text>
+        </Card>
+      </TouchableOpacity>
     );
   }
   return <View />;

@@ -1,4 +1,4 @@
-import { Text, View, FlatList } from 'react-native';
+import { Text, View, FlatList, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import Loading from '../../components/LoadingComponent';
@@ -73,9 +73,18 @@ const ProductsDisplay = ({ navigation }) => {
   return (
     <View>
       <FilterProducts filter={filter} handleSortChange={handleSortChange} />
-      <ProductsList navigation={navigation} products={sortedProducts} />
+      <Text style={styles.text}>{sortedProducts.length} products</Text>
+      <ProductsList products={sortedProducts} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  text: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20
+  }
+});
 
 export default ProductsDisplay;
