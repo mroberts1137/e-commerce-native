@@ -43,4 +43,10 @@ const productsSlice = createSlice({
   }
 });
 
+export const selectByCategory = (category) => (state) => {
+  return state.products.productsArray.filter(
+    (product) => product.category === category
+  );
+};
+
 export const productsReducer = productsSlice.reducer;

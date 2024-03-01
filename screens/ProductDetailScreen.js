@@ -1,23 +1,38 @@
-import { Text, View, ScrollView, StyleSheet, Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  Image,
+  Alert,
+  FlatList
+} from 'react-native';
 import { Card, Rating, Button, Icon, Divider } from 'react-native-elements';
-import { useDispatch } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
 import { addItem } from '../features/cart/cartSlice';
+import { selectByCategory } from '../features/products/productsSlice';
+import ProductCard from '../features/products/ProductCard';
 
 const ProductDetailScreen = ({ route }) => {
   const { product } = route.params;
   const dispatch = useDispatch();
+  const similarProducts = useSelector(selectByCategory(product.category));
 
   const handleAddToCart = () => {
     dispatch(addItem(product));
+    Alert.alert('', `"${product.title}" added to cart`, '', [{ text: 'OK' }]);
+  };
+
+  const renderSimilarProduct = ({ item: product }) => {
+    return <ProductCard product={product} />;
   };
 
   return (
     <ScrollView>
+      <Image source={{ uri: product.image }} style={styles.image} />
       <Text style={styles.title}>{product.title}</Text>
       <Divider />
-
-      <Image source={{ uri: product.image }} style={styles.image} />
       <View
         style={{ flexDirection: 'row', marginVertical: 10, marginLeft: 10 }}
       >
@@ -40,7 +55,7 @@ const ProductDetailScreen = ({ route }) => {
       <Button
         onPress={() => handleAddToCart()}
         title='Add to Cart'
-        color='#5637DD'
+        color='#FF9505'
         icon={
           <Icon
             name='cart-plus'
@@ -50,20 +65,21 @@ const ProductDetailScreen = ({ route }) => {
           />
         }
         buttonStyle={{
-          backgroundColor: '#5637DD',
+          backgroundColor: '#FF9505',
           width: 200,
           marginLeft: 100,
           marginBottom: 20
         }}
       />
       <Divider />
+
       <Text style={styles.title}>Similar Items</Text>
-      <ScrollView horizontal>
-        <Text>1</Text>
-        <Text>2</Text>
-        <Text>3</Text>
-        <Text>4</Text>
-      </ScrollView>
+      <FlatList
+        data={similarProducts}
+        renderItem={renderSimilarProduct}
+        keyExtractor={(item) => item.id.toString()}
+        horizontal
+      />
     </ScrollView>
   );
 };

@@ -12,7 +12,7 @@ import CartScreen from './CartScreen';
 
 const screenOptions = {
   headerTintColor: '#FFF',
-  headerStyle: { backgroundColor: '#5637DD' }
+  headerStyle: { backgroundColor: '#FF9505' }
 };
 
 const Tab = createBottomTabNavigator();
@@ -50,8 +50,8 @@ const Main = () => {
   }, [dispatch]);
 
   const tabBarOptions = {
-    activeBackgroundColor: '#5637DD',
-    inactiveBackgroundColor: '#CEC8FF',
+    activeBackgroundColor: '#FF9505',
+    inactiveBackgroundColor: '#FED8A5',
     activeTintColor: '#FFF',
     inactiveTintColor: '#808080',
     labelStyle: { fontSize: 16 }
@@ -73,7 +73,8 @@ const Main = () => {
               return (
                 <Icon name='home' type='font-awesome' color={props.color} />
               );
-            }
+            },
+            headerShown: false
           }}
         />
         <Tab.Screen
@@ -88,7 +89,8 @@ const Main = () => {
                   color={props.color}
                 />
               );
-            }
+            },
+            headerShown: false
           }}
         />
       </Tab.Navigator>
